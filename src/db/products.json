@@ -1,0 +1,134 @@
+[
+  {
+    "title": "Iphone 14",
+    "description": "Silver 128 gb",
+    "price": "1000",
+    "code": "PT001",
+    "stock": "20",
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [],
+    "id": 1
+  },
+  {
+    "title": "Iphone 12",
+    "description": "Silver 128 gb",
+    "price": "700",
+    "code": "PT002",
+    "stock": "20",
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [ ],
+    "id": 2
+  },
+  {
+    "title": "Iphone 13",
+    "description": "Blue 128 gb",
+    "price": "700",
+    "code": "PT003",
+    "stock": "20",
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [],
+    "id": 3
+  },
+  {
+    "title": "Iphone 13",
+    "description": "Blue 500 gb",
+    "price": "900",
+    "code": "PT004",
+    "stock": "20",
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [],
+    "id": 4
+  },
+  {
+    "title": "Samsung S23",
+    "description": "Black 256 gb",
+    "price": "1200",
+    "code": "PT005",
+    "stock": "20",
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [],
+    "id": 5
+  },
+  {
+    "title": "Samsung S22",
+    "description": "Black 256 gb",
+    "price": "700",
+    "code": "PT006",
+    "stock": "20",
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [],
+    "id": 6
+  },
+  {
+    "title": "Samsung S23",
+    "description": "White 128 gb",
+    "price": "800",
+    "code": "PT007",
+    "stock": "20",
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [],
+    "id": 7
+  },
+  {
+    "title": "Xiamoi Ultra",
+    "description": "Black 500 gb",
+    "price": "600",
+    "code": "PT008",
+    "stock": "20",
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [],
+    "id": 8
+  },
+  {
+    "title": "Iphone 14 Pro",
+    "description": "Midnight 256 gb",
+    "price": "1400",
+    "code": "PT009",
+    "stock": "20",
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [],
+    "id": 9
+  },
+  {
+    "title": "Iphone 11",
+    "description": "Silver 128 gb",
+    "price": "600",
+    "code": "PT010",
+    "stock": "20",
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [],
+    "id": 10
+  },
+  {
+    "title": "Samsung S21",
+    "description": "Black 256 gb",
+    "price": 400,
+    "code": "PT011",
+    "stock": "20",
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [],
+    "id": 11
+  },
+  {
+    "title": "Iphone 13 Pro",
+    "description": "Midnight 256 gb",
+    "price": 850,
+    "code": "PT012",
+    "stock": 20,
+    "category": "smartPhone",
+    "status": true,
+    "thumbnails": [],
+    "id": 12
+  }
+]
