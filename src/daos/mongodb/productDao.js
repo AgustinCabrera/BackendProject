@@ -1,23 +1,20 @@
 import fs from 'fs';
+import { ProductModel } from './models/productModel';
 
-export default class ProductManager {
-    constructor (path) {
-        this.path = path
-        }
-    async addProduct(product){
+export const addProduct = async(product) =>{
         try {
-            const productsFile = await this.getProducts();
+            const productsFile = await ProductModel.getProducts();
             if (!product.title || !product.description || !product.code || product.price == 0 || product.stock < 0 || !product.category) {
                 return 'Error: missing parameters';
             } else {
-                const exists = await this.#checkCode(product.code) 
+                const exists = await ProductModel.checkCode(product.code) // #checkCode
                 if (exists === false) {
                     const newProduct = {
                         ...product,
-                        id: await this.#getMaxID() + 1 
+                        id: await ProductModel.getMaxID() + 1 // #getMaxID
                     }
                     productsFile.push(newProduct);
-                    await fs.promises.writeFile(this.path, JSON.stringify(productsFile));
+                    await fs.promises.writeFile(ProductModel.path, JSON.stringify(productsFile));
                     return newProduct;
                 } else {
                     return 'Error: Code exists'
@@ -28,21 +25,24 @@ export default class ProductManager {
                 console.log(error);
             }
         }
-    async getProducts(){
+        
+export const getProducts = async() => {
         try {
-            if(fs.existsSync(this.path)){ 
-                const products = await fs.promises.readFile(this.path, 'utf-8');
+            if(fs.existsSync(ProductModel.path)){ // verificar que existe el archivo
+                const products = await fs.promises.readFile(ProductModel.path, 'utf-8');
                 const productsJs = JSON.parse(products);
                 return productsJs;
             } else {
-                return [] 
+                return [] // si no existe, simula un array vacío
             }
         }
         catch (error){
             console.log(error);
         }
     }
-    async #checkCode(codeProduct){
+        
+    /* ----------- verifica si el codigo existe ---------- */
+/* async #checkCode(codeProduct){
         try {
             const productsFile = await this.getProducts();
             if (!productsFile.find(product => product.code === codeProduct)) {
@@ -56,8 +56,10 @@ export default class ProductManager {
         catch (error){
             console.log(error);
         }
-    }
-    async #getMaxID(){
+    } */
+    
+    /* ------------------------ busca el ultimo ID creado ----------------------- */
+  /*   async #getMaxID(){
         try {
             const productsFile = await this.getProducts();
             const ids = productsFile.map(product => product.id)
@@ -70,10 +72,10 @@ export default class ProductManager {
         catch (error){
             console.log(error);
         } 
-    }
-    async getProductById(productId){
+    } */
+export const getProductById = async(productId) => {
         try {
-            const productsFile = await this.getProducts();
+            const productsFile = await ProductModel.getProducts();
             const idProduct = productsFile.find(product => product.id === productId)
             if (idProduct) {
                 return idProduct
@@ -85,18 +87,19 @@ export default class ProductManager {
             console.log(error);
         }
     }
-    async updateProduct(prodId, product){
+    
+    export const updateProduct = async(prodId, product) =>{
         try {
             if(Object.keys(product).length === 0) {
                 return 'Nothing to update'
             } else {
-                const productsFile = await this.getProducts();
+                const productsFile = await ProductModel.getProducts();
                 const idPosition = productsFile.findIndex(product => product.id === prodId);
                 if(idPosition > -1){
                     if(product.title){productsFile[idPosition].title = product.title};
                     if(product.description){productsFile[idPosition].description = product.description};
                     if(product.code){
-                        if(await this.#checkCode(product.code)) {
+                        if(await ProductModel.checkCode(product.code)) { // #checkCode
                             return 'Error: code already in use';
                         } else {
                             productsFile[idPosition].code = product.code
@@ -108,7 +111,7 @@ export default class ProductManager {
                     if(product.category){productsFile[idPosition].category = product.category};
                     if(product.thumbnails){productsFile[idPosition].thumbnails = product.thumbnails};
                     
-                    await fs.promises.writeFile(this.path, JSON.stringify(productsFile));
+                    await fs.promises.writeFile(ProductModel.path, JSON.stringify(productsFile));
                     return productsFile[idPosition];
                 } else {
                     return 'Error: product ID not found';
@@ -119,13 +122,13 @@ export default class ProductManager {
             console.log(error);
         }
     }
-    async deleteProduct(productId){
+  export const deleteProduct = async(productId) =>{
         try {
-            const productsFile = await this.getProducts();
+            const productsFile = await ProductModel.getProducts();
             const idPosition = productsFile.findIndex(product => product.id === productId);
             if(idPosition>-1){
                 productsFile.splice(idPosition,1);
-                await fs.promises.writeFile(this.path, JSON.stringify(productsFile));
+                await fs.promises.writeFile(ProductModel.path, JSON.stringify(productsFile));
                 return 'OK';
             } else {
                 return 'Error';
@@ -135,9 +138,9 @@ export default class ProductManager {
             console.log(error);
         }
     }
-    async listTopN(listNumber){
+    export const listTopN = async(listNumber) =>{
         try {
-            const productsFile = await this.getProducts();
+            const productsFile = await ProductModel.getProducts();
             const slicedArray = productsFile.slice(0, listNumber);
             return slicedArray;
         }
@@ -145,4 +148,3 @@ export default class ProductManager {
             console.log(error);
         }
     }   
-}
