@@ -33,7 +33,7 @@ export const getCarts= async() =>{
         }
     }
         
-  export const getMaxID = async() =>{
+export const getMaxID = async() =>{
         try {
             const cartsFile = await CartModel.getCarts();
             const ids = cartsFile.map(cart => cart.id)
