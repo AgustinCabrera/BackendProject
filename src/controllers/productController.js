@@ -6,7 +6,6 @@ export const getAll = async (req, res, next) => {
         const limit = parseInt(req.query.limit)
         const skip = parseInt(req.query.skip)
         const page = parseInt(req.query.page)
-
         const ProductService = new ProductService(response);
     } catch (error) {
         next(error)

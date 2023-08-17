@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { __dirname } from "../util.js";
-import { uploader } from '../middlewares/errorHandler.js'
+import { uploadMiddleware } from '../middlewares/errorHandler.js'
 import ProductManager from '../managers/productManager.js'
 
 const router = Router();
@@ -43,7 +43,7 @@ catch(error){
 }
 })
 
-router.post('/', uploader.array('thumbnails'), async(req, res) =>{
+router.post('/',async(req, res) =>{
     try{
         const prodData = req.body;
         prodData.price = Number(prodData.price);
