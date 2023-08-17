@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { CartModel } from './models/cartModel';
 
-// queda ver como modificar el getMaxID para que sea var privada
 export const newCart = async() => {
         try {
             const cartsFile = await CartModel.getCarts();

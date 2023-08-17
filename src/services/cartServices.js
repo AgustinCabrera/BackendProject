@@ -32,7 +32,7 @@ export const getCartById = async (id) => {
     }
 }
 
-export const appProductToCart = async (id, productId) => {
+export const addProductToCart = async (id, productId) => {
 try {
 const cart = await cartDao.getCartById(id);
 const product = await productDao.getProductById(productId);
