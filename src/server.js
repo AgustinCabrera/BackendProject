@@ -4,7 +4,7 @@ import cartsRouter from './routes/cartsRouter.js';
 import './daos/mongodb/connection.js'
 import { uploadMiddleware } from './middlewares/errorHandler.js';
 import morgan from 'morgan';
-
+import { initMongoDB } from './daos/mongodb/connection.js';
 const app = express();
 
 app.use(express.json());
@@ -12,6 +12,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(uploadMiddleware)
 app.use(morgan('dev'))
 
+initMongoDB();
 
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
