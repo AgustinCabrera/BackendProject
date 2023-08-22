@@ -1,0 +1,13 @@
+    <div id="pagination" class="pagination">
+    <ul>
+        {{#if hasPrevPage}}
+        <li><a href="{{prevLink}}">Prev</a></li>
+        
+        {{/if}}
+        <li><span>{{currentPage}}</span></li>
+        {{#if hasNextPage}}
+        <li><a href="{{nextLink}}">Next</a></li>
+        {{/if}}
+    </ul>
+    </div>
+    <button onclick="location.href='/'">Ir a login</button>

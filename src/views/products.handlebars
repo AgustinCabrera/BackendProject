@@ -1,0 +1,8 @@
+<div id="homePage" class="page">
+    <h1>Products</h1>
+    {{> productsList products=products }}
+
+    {{> pagionation currentPage=currentPage hasPrevPage=hasPrevPage hasNextPage=hasNextPage prevLink=prevLink nextLink=nextLink }}
+</div>
+<script src="/products.js"></script>
+<button onclick="location.href='/'">Ir a login</button>

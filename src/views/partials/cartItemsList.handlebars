@@ -1,0 +1,22 @@
+    <ul class="cartItemsList" id="cartItemsList">
+    {{#if items.length}}
+        {{#each items as |item|}}
+        <li class="productCard">
+            <img src="/images/{{item.product.thumbnails.[0]}}" alt="{{item.product.title}}">
+            <div>
+                <h3 class="title">{{item.product.title}}</h3>
+                <p class="description">{{item.product.description}}</p>
+                <p>Unit Price: <b>${{item.product.price}}</b></p>
+                
+            </div>
+            <div>
+                <p>Quantity: <b>{{item.quantity}}</b></p>
+                <p>Total Price: <b>${{item.totalPrice}}</b></p>
+            </div>
+        </li>
+        {{/each}}
+    {{else}}
+        <h2>The cart is empty!</h2>
+    {{/if}}
+    </ul>
+    <button onclick="location.href='/'">Ir a login</button>
