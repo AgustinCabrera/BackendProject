@@ -1,7 +1,10 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import MongoStore from 'connect-mongo'
+import passport from 'passport';
 
+import './passport/localStrategy'
+import './passport/githubStrategy'
 
 import productsRouter from './routes/productsRouter.js';
 import userRouter from './routes/userRouter.js';
@@ -42,6 +45,9 @@ app.set('view engine', 'handlebars');
 
 app.use(cookieParser());
 app.use(session(mongoStoreOptions));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/api/products', productsRouter)
 app.use('/', viewRouter);
