@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import UserDao from '../daos/mongodb/userDao';
+import UserDao from '../daos/mongodb/userDao.js';
 
 const userDao = new UserDao();
 
@@ -10,10 +10,8 @@ const strategyOptions = {
     passReqToCallback: true
 };
 
-/* ----------------------------- lógica registro ---------------------------- */
 const register = async(req, email, password, done) => {
     try {
-        // const { first_name, last_name,... } = req.body
         const user = await userDao.getByEmail(email);
         if (user) return done(null, false);
         const newUser = await userDao.register(req.body);
@@ -24,7 +22,6 @@ const register = async(req, email, password, done) => {
 };
 
 
-/* ------------------------------ lógica login ------------------------------ */
 const login = async(req, email, password, done) => {
     try {
         const user = { email, password };
@@ -38,21 +35,14 @@ const login = async(req, email, password, done) => {
     }
 };
 
-/* ------------------------------- strategies ------------------------------- */
 const registerStrategy = new LocalStrategy(strategyOptions, register);
 const loginStrategy = new LocalStrategy(strategyOptions, login);
 
 
-
-/* ----------------------------- inicializacion ----------------------------- */
 passport.use('login', loginStrategy);
 passport.use('register', registerStrategy);
 
 
-
-/* ------------------------- serialize y deserialize ------------------------ */
-//guarda al usuario en req.session.passport
-//req.session.passport.user --> id del usuario
 passport.serializeUser((user, done)=>{
     done(null, user._id)
 });

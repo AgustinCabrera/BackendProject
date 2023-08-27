@@ -1,4 +1,6 @@
 import * as service from "../services/productServices"
+import Controllers from "./classController"
+
 
 export const getAll = async (req, res, next) => {
     try {

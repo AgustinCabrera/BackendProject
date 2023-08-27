@@ -1,24 +1,43 @@
-import { Router } from "express";
-import { loginUser, registerUser, logoutUser , githubResponse} from "../controllers/userController";
-import passport from "passport";
-import { isAuth } from "../middlewares/isAuth.js";
+    import { Router } from "express";
+    import passport from "passport";
+    import * as controller from "../controllers/userController.js";
 
+    const router = Router();
 
+    router.post(
+    "/register",
+    passport.authenticate("register", {
+        successRedirect: "/login?registerSuccessful=true",
+        failureRedirect: "/error-register",
+        passReqToCallback: true,
+    })
+    );
 
-const router = Router();
+    router.post(
+    "/login",
+    passport.authenticate("login", {
+        successRedirect: "/products?loginSuccessful=true",
+        failureRedirect: "/error-login",
+        passReqToCallback: true,
+    })
+    );
 
-router.get('/logout', logoutUser);
+    router.get(
+    "/register-github",
+    passport.authenticate("github", {
+        scope: ["user:email"],
+    })
+    );
 
-router.post('/register', registerUser);
+    router.get(
+    "/github",
+    passport.authenticate("github", {
+        scope: ["user:email"],
+        failureRedirect: "/error-login",
+        successRedirect: "/products?loginSuccessful=true",
+    })
+    );
 
-router.post('/login', loginUser);
+    router.get("/logout", controller.logoutUser);
 
-router.get('/private',isAuth,(req,res) => res.send('route private'));
-
-router.get('/register-github', passport.authenticate('github',{scope:['user:email']}));
-
-router.get('/profile-github', passport.authenticate('github',{scope:['user:email']}),githubResponse);
-
-
-
-export default router;
+    export default router;

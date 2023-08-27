@@ -1,60 +1,49 @@
-import express from 'express';
+import express, {json, urlencoded} from 'express';
 import cookieParser from 'cookie-parser';
-import MongoStore from 'connect-mongo'
 import passport from 'passport';
 
-import './passport/localStrategy'
-import './passport/githubStrategy'
+import '../src/passport/localStrategy.js'
+import '../src/passport/githubStrategy.js'
+import 'dotenv/config'
 
 import productsRouter from './routes/productsRouter.js';
+import cartRouter from './routes/cartsRouter.js'
 import userRouter from './routes/userRouter.js';
 import viewRouter from './routes/viewsRouter.js'
 
 import './daos/mongodb/connection.js'
 import { uploadMiddleware } from './middlewares/errorHandler.js';
-import { initMongoDB } from './daos/mongodb/connection.js';
-import {connectString } from './daos/mongodb/connection.js';
+import {connectString , initMongoDB} from './daos/mongodb/connection.js';
+import morgan from 'morgan';
 
-const mongoStoreOptions = {
-    store: MongoStore.create({
-        mongoUrl: connectString,
-        crypto:{
-            secret:'1234'
-        }
-    }),
-    secret: '1234',
-    cookie:{
-        sameSite:true
-    },
-    resave: false,
-    saveUninitialized: false,
-    cookie:{}
-}
 
 initMongoDB();
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(uploadMiddleware)
+app
+    .use(json())
+    .use(urlencoded({extended: true}))
+    .use(uploadMiddleware)
+    .use(morgan("dev"))
 
-app.engine('handlebars',handlebars.engine());
-app.set('views',__dirname+'/views');
-app.set('view engine', 'handlebars');
+    .engine('handlebars',handlebars.engine())
+    .set('views',__dirname+'/views')
+    .set('view engine', 'handlebars')
 
-app.use(cookieParser());
-app.use(session(mongoStoreOptions));
+    .use(cookieParser())
+    .use(session(mongoStoreOptions))
 
-app.use(passport.initialize());
-app.use(passport.session());
+    .use(passport.initialize())
+    .use(passport.session())
 
-app.use('/api/products', productsRouter)
-app.use('/', viewRouter);
-app.use('/users', userRouter);
+    .use('/api/products', productsRouter)
+    .use("/api/carts", cartRouter)
+    .use('/users', userRouter)
+    .use('/', viewRouter)
 
+const PORT = process.env.PORT
 
-
-app.listen(8080, ()=>{
-    console.log(`Server listening on port 8080}`);
+app.listen(PORT, ()=>{
+    console.log(`Server listening on port ${PORT}}`);
 })
